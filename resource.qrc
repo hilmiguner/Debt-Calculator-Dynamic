@@ -1,0 +1,16 @@
+<RCC>
+  <qresource prefix="backgrounds">
+    <file>resources/gradient3.jpg</file>
+    <file>resources/gradient1.jpg</file>
+  </qresource>
+  <qresource prefix="Icons">
+    <file>resources/key.png</file>
+    <file>resources/user.png</file>
+    <file>resources/debt.png</file>
+  </qresource>
+  <qresource prefix="windowButtons">
+    <file>resources/left-arrow.png</file>
+    <file>resources/minus.png</file>
+    <file>resources/cancel.png</file>
+  </qresource>
+</RCC>
