@@ -105,6 +105,7 @@ class Ui_MainWindow(object):
 "border-radius: 15px;\n"
 "padding-left: 35px;\n"
 "color: #069EAD;")
+        self.lineUsername.setMaxLength(20)
         self.lineUsername.setObjectName("lineUsername")
         self.linePassword = QtWidgets.QLineEdit(self.pageLogin)
         self.linePassword.setGeometry(QtCore.QRect(70, 90, 321, 41))
@@ -115,7 +116,9 @@ class Ui_MainWindow(object):
         self.linePassword.setStyleSheet("background-color: #D1F0F3;\n"
 "border-radius: 15px;\n"
 "padding-left: 35px;\n"
+"padding-right: 35px;\n"
 "color: #069EAD;")
+        self.linePassword.setMaxLength(20)
         self.linePassword.setEchoMode(QtWidgets.QLineEdit.Password)
         self.linePassword.setObjectName("linePassword")
         self.btnLogin_2 = QtWidgets.QPushButton(self.pageLogin)
@@ -141,6 +144,16 @@ class Ui_MainWindow(object):
         self.lblPassIcon.setPixmap(QtGui.QPixmap(":/Icons/resources/key.png"))
         self.lblPassIcon.setScaledContents(True)
         self.lblPassIcon.setObjectName("lblPassIcon")
+        self.btnPassToggle = QtWidgets.QToolButton(self.pageLogin)
+        self.btnPassToggle.setGeometry(QtCore.QRect(350, 100, 41, 21))
+        self.btnPassToggle.setText("")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/Icons/resources/eye.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/Icons/resources/hide.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        self.btnPassToggle.setIcon(icon2)
+        self.btnPassToggle.setIconSize(QtCore.QSize(30, 30))
+        self.btnPassToggle.setCheckable(True)
+        self.btnPassToggle.setObjectName("btnPassToggle")
         self.stackedWidget.addWidget(self.pageLogin)
         self.pageRegister = QtWidgets.QWidget()
         self.pageRegister.setObjectName("pageRegister")
@@ -165,6 +178,7 @@ class Ui_MainWindow(object):
 "border-radius: 15px;\n"
 "padding-left: 35px;\n"
 "color: #069EAD;")
+        self.lineUsername_2.setMaxLength(20)
         self.lineUsername_2.setObjectName("lineUsername_2")
         self.lblPassIcon_2 = QtWidgets.QLabel(self.pageRegister)
         self.lblPassIcon_2.setGeometry(QtCore.QRect(80, 100, 21, 21))
@@ -187,14 +201,24 @@ class Ui_MainWindow(object):
         self.linePassword_2.setStyleSheet("background-color: #D1F0F3;\n"
 "border-radius: 15px;\n"
 "padding-left: 35px;\n"
+"padding-right: 35px;\n"
 "color: #069EAD;")
+        self.linePassword_2.setMaxLength(20)
         self.linePassword_2.setEchoMode(QtWidgets.QLineEdit.Password)
         self.linePassword_2.setObjectName("linePassword_2")
+        self.btnPassToggle_2 = QtWidgets.QToolButton(self.pageRegister)
+        self.btnPassToggle_2.setGeometry(QtCore.QRect(350, 100, 41, 21))
+        self.btnPassToggle_2.setText("")
+        self.btnPassToggle_2.setIcon(icon2)
+        self.btnPassToggle_2.setIconSize(QtCore.QSize(30, 30))
+        self.btnPassToggle_2.setCheckable(True)
+        self.btnPassToggle_2.setObjectName("btnPassToggle_2")
         self.btnRegister_2.raise_()
         self.lineUsername_2.raise_()
         self.lblUserIcon_2.raise_()
         self.linePassword_2.raise_()
         self.lblPassIcon_2.raise_()
+        self.btnPassToggle_2.raise_()
         self.stackedWidget.addWidget(self.pageRegister)
         self.btnBack = QtWidgets.QToolButton(self.centralwidget)
         self.btnBack.setEnabled(True)
@@ -203,9 +227,9 @@ class Ui_MainWindow(object):
         self.btnBack.setStyleSheet("QToolButton {\n"
 "background: rgba(255, 122, 89, 0);}")
         self.btnBack.setText("")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/windowButtons/resources/left-arrow.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btnBack.setIcon(icon2)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/windowButtons/resources/left-arrow.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btnBack.setIcon(icon3)
         self.btnBack.setIconSize(QtCore.QSize(25, 25))
         self.btnBack.setObjectName("btnBack")
         MainWindow.setCentralWidget(self.centralwidget)

@@ -1,10 +1,12 @@
 import sys
+import string
 from designFiles.startUpWindow import Ui_MainWindow
 from databaseManage import database
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QMessageBox
 
 class myWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -39,6 +41,16 @@ class myWindow(QtWidgets.QMainWindow):
         self.ui.btnRegister.clicked.connect(self.action_btnRegisterClicked)
         self.ui.btnBack.clicked.connect(self.action_btnBackClicked)
 
+        self.ui.lineUsername_2.textChanged.connect(self.action_lineUsername_2Changed)
+        self.ui.lineUsername.textChanged.connect(self.action_lineUsernameChanged)
+
+        self.ui.linePassword_2.textChanged.connect(self.action_linePassword_2Changed)
+        self.ui.linePassword.textChanged.connect(self.action_linePasswordChanged)
+
+        self.ui.btnPassToggle.clicked.connect(self.action_btnPassToggleClicked)
+        self.ui.btnPassToggle_2.clicked.connect(self.action_btnPassToggle_2Clicked)
+
+        self.ui.btnRegister_2.clicked.connect(self.action_btnRegister_2Clicked)
         self.ui.btnLogin_2.clicked.connect(self.action_btnLogin_2Clicked)
 
     def action_btnExitClicked(self):
@@ -59,8 +71,61 @@ class myWindow(QtWidgets.QMainWindow):
         self.ui.stackedWidget.setCurrentWidget(self.ui.pageStartUp)
         self.ui.btnBack.close()
 
+    def action_lineUsername_2Changed(self, text):
+        for ix, char in enumerate(text):
+            if char not in string.ascii_letters and char not in string.digits:
+                pos = self.ui.lineUsername_2.cursorPosition()
+                text = text[:ix] + text[ix + 1:]
+                self.ui.lineUsername_2.setText(text)
+                self.ui.lineUsername_2.setCursorPosition(pos - 1)
+
+    def action_lineUsernameChanged(self, text):
+        for ix, char in enumerate(text):
+            if char not in string.ascii_letters and char not in string.digits:
+                pos = self.ui.lineUsername.cursorPosition()
+                text = text[:ix] + text[ix + 1:]
+                self.ui.lineUsername.setText(text)
+                self.ui.lineUsername.setCursorPosition(pos - 1)
+
+    def action_linePassword_2Changed(self, text):
+        for ix, char in enumerate(text):
+            if char not in string.ascii_letters and char not in string.digits:
+                pos = self.ui.linePassword_2.cursorPosition()
+                text = text[:ix] + text[ix + 1:]
+                self.ui.linePassword_2.setText(text)
+                self.ui.linePassword_2.setCursorPosition(pos - 1)
+
+    def action_linePasswordChanged(self, text):
+        for ix, char in enumerate(text):
+            if char not in string.ascii_letters and char not in string.digits:
+                pos = self.ui.linePassword.cursorPosition()
+                text = text[:ix] + text[ix + 1:]
+                self.ui.linePassword.setText(text)
+                self.ui.linePassword.setCursorPosition(pos - 1)
+
+    def action_btnPassToggleClicked(self, isToggled):
+        if isToggled:
+            self.ui.linePassword.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
+        else:
+            self.ui.linePassword.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
+
+    def action_btnPassToggle_2Clicked(self, isToggled):
+        if isToggled:
+            self.ui.linePassword_2.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
+        else:
+            self.ui.linePassword_2.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
+
     def action_btnLogin_2Clicked(self):
         dbManager = database()
+
+    def action_btnRegister_2Clicked(self):
+        username = self.ui.lineUsername_2.text()
+        password = self.ui.linePassword_2.text()
+        dbManager = database()
+        if dbManager.canUserRegister(username):
+            dbManager.addUser(username, password)
+        else:
+            pass
 
 def App():
     myApp = QtWidgets.QApplication(sys.argv)

@@ -4,6 +4,8 @@
     <file>resources/gradient1.jpg</file>
   </qresource>
   <qresource prefix="Icons">
+    <file>resources/eye.png</file>
+    <file>resources/hide.png</file>
     <file>resources/key.png</file>
     <file>resources/user.png</file>
     <file>resources/debt.png</file>

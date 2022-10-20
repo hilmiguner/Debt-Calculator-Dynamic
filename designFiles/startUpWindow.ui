@@ -224,6 +224,9 @@ border-radius: 15px;
 padding-left: 35px;
 color: #069EAD;</string>
        </property>
+       <property name="maxLength">
+        <number>20</number>
+       </property>
        <property name="placeholderText">
         <string>Username</string>
        </property>
@@ -249,7 +252,11 @@ color: #069EAD;</string>
         <string notr="true">background-color: #D1F0F3;
 border-radius: 15px;
 padding-left: 35px;
+padding-right: 35px;
 color: #069EAD;</string>
+       </property>
+       <property name="maxLength">
+        <number>20</number>
        </property>
        <property name="echoMode">
         <enum>QLineEdit::Password</enum>
@@ -321,6 +328,33 @@ color: #D9F1F5;</string>
         <bool>true</bool>
        </property>
       </widget>
+      <widget class="QToolButton" name="btnPassToggle">
+       <property name="geometry">
+        <rect>
+         <x>350</x>
+         <y>100</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../resource.qrc">
+         <normaloff>:/Icons/resources/eye.png</normaloff>
+         <normalon>:/Icons/resources/hide.png</normalon>:/Icons/resources/eye.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>30</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="pageRegister">
       <widget class="QPushButton" name="btnRegister_2">
@@ -370,6 +404,9 @@ color: #D9F1F5;</string>
 border-radius: 15px;
 padding-left: 35px;
 color: #069EAD;</string>
+       </property>
+       <property name="maxLength">
+        <number>20</number>
        </property>
        <property name="placeholderText">
         <string>Username</string>
@@ -434,7 +471,11 @@ color: #069EAD;</string>
         <string notr="true">background-color: #D1F0F3;
 border-radius: 15px;
 padding-left: 35px;
+padding-right: 35px;
 color: #069EAD;</string>
+       </property>
+       <property name="maxLength">
+        <number>20</number>
        </property>
        <property name="echoMode">
         <enum>QLineEdit::Password</enum>
@@ -443,11 +484,39 @@ color: #069EAD;</string>
         <string>Password</string>
        </property>
       </widget>
+      <widget class="QToolButton" name="btnPassToggle_2">
+       <property name="geometry">
+        <rect>
+         <x>350</x>
+         <y>100</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../resource.qrc">
+         <normaloff>:/Icons/resources/eye.png</normaloff>
+         <normalon>:/Icons/resources/hide.png</normalon>:/Icons/resources/eye.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>30</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
       <zorder>btnRegister_2</zorder>
       <zorder>lineUsername_2</zorder>
       <zorder>lblUserIcon_2</zorder>
       <zorder>linePassword_2</zorder>
       <zorder>lblPassIcon_2</zorder>
+      <zorder>btnPassToggle_2</zorder>
      </widget>
     </widget>
    </widget>
