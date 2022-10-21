@@ -1,12 +1,13 @@
 import sys
 import string
 from designFiles.startUpWindow import Ui_MainWindow
+from messageBoxes import myMessageBox
 from databaseManage import database
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QDialog
 
 class myWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -116,16 +117,36 @@ class myWindow(QtWidgets.QMainWindow):
             self.ui.linePassword_2.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
 
     def action_btnLogin_2Clicked(self):
+        username = self.ui.lineUsername.text()
+        password = self.ui.linePassword.text()
+
         dbManager = database()
+        result = dbManager.checkLogin(username, password)
+        if not result:
+            warningBox = myMessageBox("warning3")
+            warningBox.show()
+            warningBox.exec()
+        elif result[0]:
+            userID = result[1]
 
     def action_btnRegister_2Clicked(self):
         username = self.ui.lineUsername_2.text()
         password = self.ui.linePassword_2.text()
+
         dbManager = database()
         if dbManager.canUserRegister(username):
-            dbManager.addUser(username, password)
+            if len(password) < 8:
+                warningBox = myMessageBox("warning2")
+                warningBox.show()
+                warningBox.exec()
+                return
+            respond = dbManager.addUser(username, password)
+            if respond != -1:
+                userID = respond
         else:
-            pass
+            warningBox = myMessageBox("warning1", username)
+            warningBox.show()
+            warningBox.exec()
 
 def App():
     myApp = QtWidgets.QApplication(sys.argv)

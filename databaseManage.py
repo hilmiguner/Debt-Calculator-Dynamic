@@ -16,6 +16,17 @@ class database:
     def __del__(self):
         self.connection.disconnect()
 
+    def checkLogin(self, name, password):
+        try:
+            self.cursor.execute(f"SELECT COUNT(*) FROM users WHERE username='{name}' and password='{password}'")
+            if self.cursor.fetchone()[0] == 1:
+                self.cursor.execute(f"SELECT userID FROM users WHERE username='{name}' and password='{password}'")
+                ID = self.cursor.fetchone()[0]
+                return True, ID
+        except Exception as err:
+            print(err)
+        return False
+
     def canUserRegister(self, name):
         try:
             self.cursor.execute(f"SELECT COUNT(*) FROM users WHERE username='{name}'")
@@ -35,5 +46,7 @@ class database:
 
             self.cursor.execute(f"INSERT INTO tempusers(userID, username) VALUES ({userID},'{username}')")
             self.connection.commit()
+            return userID
         except Exception as err:
             print(err)
+        return -1

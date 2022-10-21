@@ -4,6 +4,11 @@
     <file>resources/gradient1.jpg</file>
   </qresource>
   <qresource prefix="Icons">
+    <file>resources/log-in.png</file>
+    <file>resources/copy.png</file>
+    <file>resources/shopping-cart.png</file>
+    <file>resources/followers.png</file>
+    <file>resources/warning.png</file>
     <file>resources/eye.png</file>
     <file>resources/hide.png</file>
     <file>resources/key.png</file>
@@ -11,6 +16,7 @@
     <file>resources/debt.png</file>
   </qresource>
   <qresource prefix="windowButtons">
+    <file>resources/home.png</file>
     <file>resources/left-arrow.png</file>
     <file>resources/minus.png</file>
     <file>resources/cancel.png</file>

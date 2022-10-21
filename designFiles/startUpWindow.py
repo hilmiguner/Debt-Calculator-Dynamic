@@ -16,15 +16,17 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(461, 490)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setStyleSheet("QWidget {\n"
+        self.centralwidget.setStyleSheet("border: 4px solid;\n"
 "border-radius: 20px;\n"
-"background-image: url(:/backgrounds/resources/gradient3.jpg);}\n"
+"background-image: url(:/backgrounds/resources/gradient3.jpg);\n"
+"border-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.1875 rgba(0, 210, 255, 255), stop:1 rgba(0, 255, 173, 255));\n"
 "")
         self.centralwidget.setObjectName("centralwidget")
         self.btnExit = QtWidgets.QToolButton(self.centralwidget)
         self.btnExit.setGeometry(QtCore.QRect(420, 10, 31, 31))
-        self.btnExit.setStyleSheet("QToolButton {\n"
-"background: rgba(255, 122, 89, 0);}")
+        self.btnExit.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.btnExit.setStyleSheet("border:none;\n"
+"background: rgba(255, 122, 89, 0);")
         self.btnExit.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/windowButtons/resources/cancel.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -33,8 +35,9 @@ class Ui_MainWindow(object):
         self.btnExit.setObjectName("btnExit")
         self.btnMinimize = QtWidgets.QToolButton(self.centralwidget)
         self.btnMinimize.setGeometry(QtCore.QRect(380, 10, 31, 31))
-        self.btnMinimize.setStyleSheet("QToolButton {\n"
-"background: rgba(255, 122, 89, 0);}")
+        self.btnMinimize.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.btnMinimize.setStyleSheet("border:none;\n"
+"background: rgba(255, 122, 89, 0);")
         self.btnMinimize.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/windowButtons/resources/minus.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -44,7 +47,8 @@ class Ui_MainWindow(object):
         self.widget = QtWidgets.QWidget(self.centralwidget)
         self.widget.setGeometry(QtCore.QRect(0, 40, 631, 651))
         self.widget.setStyleSheet("background-image: url();\n"
-"background: rgba(0,0,0,0);")
+"background: rgba(0,0,0,0);\n"
+"border:none;")
         self.widget.setObjectName("widget")
         self.lblIcon = QtWidgets.QLabel(self.widget)
         self.lblIcon.setGeometry(QtCore.QRect(120, 0, 221, 161))
@@ -129,6 +133,7 @@ class Ui_MainWindow(object):
         font.setBold(False)
         font.setWeight(50)
         self.btnLogin_2.setFont(font)
+        self.btnLogin_2.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.btnLogin_2.setStyleSheet("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.1875 rgba(0, 210, 255, 255), stop:1 rgba(0, 255, 173, 255));\n"
 "color: #D9F1F5;")
         self.btnLogin_2.setObjectName("btnLogin_2")
@@ -146,6 +151,7 @@ class Ui_MainWindow(object):
         self.lblPassIcon.setObjectName("lblPassIcon")
         self.btnPassToggle = QtWidgets.QToolButton(self.pageLogin)
         self.btnPassToggle.setGeometry(QtCore.QRect(350, 100, 41, 21))
+        self.btnPassToggle.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.btnPassToggle.setText("")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(":/Icons/resources/eye.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -165,6 +171,7 @@ class Ui_MainWindow(object):
         font.setBold(False)
         font.setWeight(50)
         self.btnRegister_2.setFont(font)
+        self.btnRegister_2.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.btnRegister_2.setStyleSheet("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.1875 rgba(0, 210, 255, 255), stop:1 rgba(0, 255, 173, 255));\n"
 "color: #D9F1F5;")
         self.btnRegister_2.setObjectName("btnRegister_2")
@@ -208,6 +215,7 @@ class Ui_MainWindow(object):
         self.linePassword_2.setObjectName("linePassword_2")
         self.btnPassToggle_2 = QtWidgets.QToolButton(self.pageRegister)
         self.btnPassToggle_2.setGeometry(QtCore.QRect(350, 100, 41, 21))
+        self.btnPassToggle_2.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.btnPassToggle_2.setText("")
         self.btnPassToggle_2.setIcon(icon2)
         self.btnPassToggle_2.setIconSize(QtCore.QSize(30, 30))
@@ -224,8 +232,9 @@ class Ui_MainWindow(object):
         self.btnBack.setEnabled(True)
         self.btnBack.setGeometry(QtCore.QRect(10, 10, 31, 31))
         self.btnBack.setMaximumSize(QtCore.QSize(16777215, 16777214))
-        self.btnBack.setStyleSheet("QToolButton {\n"
-"background: rgba(255, 122, 89, 0);}")
+        self.btnBack.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.btnBack.setStyleSheet("background: rgba(255, 122, 89, 0);\n"
+"border:none;")
         self.btnBack.setText("")
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(":/windowButtons/resources/left-arrow.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -246,7 +255,9 @@ class Ui_MainWindow(object):
         self.lineUsername.setPlaceholderText(_translate("MainWindow", "Username"))
         self.linePassword.setPlaceholderText(_translate("MainWindow", "Password"))
         self.btnLogin_2.setText(_translate("MainWindow", "LOGIN"))
+        self.btnLogin_2.setShortcut(_translate("MainWindow", "Return"))
         self.btnRegister_2.setText(_translate("MainWindow", "REGISTER"))
+        self.btnRegister_2.setShortcut(_translate("MainWindow", "Return"))
         self.lineUsername_2.setPlaceholderText(_translate("MainWindow", "Username"))
         self.linePassword_2.setPlaceholderText(_translate("MainWindow", "Password"))
 import resource_rc
