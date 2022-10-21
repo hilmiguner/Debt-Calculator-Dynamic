@@ -117,7 +117,7 @@ border:none;</string>
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="lblAppName_5">
+    <widget class="QLabel" name="lblUserInfo">
      <property name="geometry">
       <rect>
        <x>70</x>
@@ -160,7 +160,7 @@ border-bottom-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QToolButton" name="toolButton">
+    <widget class="QToolButton" name="btnAccountSettings">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -225,7 +225,7 @@ border:none;</string>
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QToolButton" name="toolButton_2">
+    <widget class="QToolButton" name="btnRelatedPersons">
      <property name="geometry">
       <rect>
        <x>310</x>
@@ -290,7 +290,7 @@ border:none;</string>
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QToolButton" name="toolButton_3">
+    <widget class="QToolButton" name="btnShoppings">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -307,7 +307,7 @@ border-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.1875 rg
       <string/>
      </property>
     </widget>
-    <widget class="QToolButton" name="toolButton_4">
+    <widget class="QToolButton" name="btnDebts">
      <property name="geometry">
       <rect>
        <x>310</x>
@@ -420,7 +420,7 @@ border:none;</string>
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QToolButton" name="toolButton_5">
+    <widget class="QToolButton" name="btnLogOut">
      <property name="geometry">
       <rect>
        <x>460</x>
@@ -485,8 +485,26 @@ border:none;</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+    <zorder>label_5</zorder>
+    <zorder>lblUserInfo</zorder>
+    <zorder>line</zorder>
+    <zorder>lblAppName</zorder>
+    <zorder>label</zorder>
+    <zorder>lblAppName_2</zorder>
+    <zorder>label_2</zorder>
+    <zorder>lblAppName_3</zorder>
+    <zorder>label_3</zorder>
+    <zorder>lblAppName_4</zorder>
+    <zorder>label_4</zorder>
+    <zorder>btnLogOut</zorder>
+    <zorder>label_6</zorder>
+    <zorder>lblAppName_6</zorder>
+    <zorder>btnAccountSettings</zorder>
+    <zorder>btnRelatedPersons</zorder>
+    <zorder>btnShoppings</zorder>
+    <zorder>btnDebts</zorder>
    </widget>
-   <widget class="QToolButton" name="btnBack">
+   <widget class="QToolButton" name="btnMainMenu">
     <property name="enabled">
      <bool>true</bool>
     </property>
