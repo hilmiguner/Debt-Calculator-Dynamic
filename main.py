@@ -10,7 +10,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMessageBox, QDialog
 
 class myWindow(QtWidgets.QMainWindow):
-    def __init__(self):
+    def __init__(self, app):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -18,6 +18,11 @@ class myWindow(QtWidgets.QMainWindow):
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.oldPos = None
+
+        self.myMainMenu = None
+
+        self.goMainMenu = False
+        self.userID = None
 
         self.setWindowIcon(QIcon("resources/debt.png"))
         self.setWindowTitle("Debt Calculator")
@@ -127,7 +132,14 @@ class myWindow(QtWidgets.QMainWindow):
             warningBox.show()
             warningBox.exec()
         elif result[0]:
-            userID = result[1]
+            self.userID = result[1]
+            self.goMainMenu = True
+            self.ui.centralwidget.hide()
+            from main2 import mainMenu
+            self.close()
+            self.myMainMenu = mainMenu(self.userID)
+            self.myMainMenu.show()
+
 
     def action_btnRegister_2Clicked(self):
         username = self.ui.lineUsername_2.text()
@@ -150,8 +162,15 @@ class myWindow(QtWidgets.QMainWindow):
 
 def App():
     myApp = QtWidgets.QApplication(sys.argv)
-    window = myWindow()
+    window = myWindow(myApp)
     window.show()
     myApp.exec()
+    myApp.quit()
+
+    # if window.goMainMenu:
+    #     from main2 import mainMenu
+    #     mainMenuWindow = mainMenu(window.userID)
+    #     mainMenuWindow.show()
+    #     myApp.exec()
 
 App()

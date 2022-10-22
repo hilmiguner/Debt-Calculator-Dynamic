@@ -50,3 +50,31 @@ class database:
         except Exception as err:
             print(err)
         return -1
+
+    def getUserInfo(self, userID, *args):
+        sql = f"SELECT {','.join(args)} FROM users WHERE userID={userID}"
+        try:
+            self.cursor.execute(sql)
+            info = self.cursor.fetchone()
+            return info
+        except Exception as err:
+            print(err)
+        return -1
+
+    def checkPassword(self, userID, password):
+        sql = f"SELECT COUNT(*) FROM users WHERE userID={userID} and password='{password}'"
+        try:
+            self.cursor.execute(sql)
+            if self.cursor.fetchone()[0] == 1:
+                return True
+        except Exception as err:
+            print(err)
+        return False
+
+    def changePassword(self, userID, newPassword):
+        sql = f"UPDATE users SET password='{newPassword}' WHERE userID={userID}"
+        try:
+            self.cursor.execute(sql)
+            self.connection.commit()
+        except Exception as err:
+            print(err)

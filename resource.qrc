@@ -4,6 +4,7 @@
     <file>resources/gradient1.jpg</file>
   </qresource>
   <qresource prefix="Icons">
+    <file>resources/edit.png</file>
     <file>resources/log-in.png</file>
     <file>resources/copy.png</file>
     <file>resources/shopping-cart.png</file>
