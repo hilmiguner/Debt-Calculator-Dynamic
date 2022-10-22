@@ -78,3 +78,47 @@ class database:
             self.connection.commit()
         except Exception as err:
             print(err)
+
+    def getRelatedPerson(self, userID, *args):
+        sql = f"SELECT {','.join(args)} FROM tempUsers WHERE userID={userID}"
+        try:
+            self.cursor.execute(sql)
+            data = self.cursor.fetchall()
+            return data
+        except Exception as err:
+            print(err)
+        return -1
+
+    def getRelatedPersonByTempUserID(self, tempUserID, *args):
+        sql = f"SELECT {','.join(args)} FROM tempUsers WHERE tempUserID={tempUserID}"
+        try:
+            self.cursor.execute(sql)
+            data = self.cursor.fetchone()
+            return data
+        except Exception as err:
+            print(err)
+        return -1
+
+    def addTempUser(self, userID, tempUserName):
+        sql = f"INSERT INTO tempusers(userID, username) VALUES ({userID},'{tempUserName}')"
+        try:
+            self.cursor.execute(sql)
+            self.connection.commit()
+        except Exception as err:
+            print(err)
+
+    def deleteTempUser(self, tempUserID):
+        sql = f"DELETE FROM tempUsers WHERE tempUserID={tempUserID}"
+        try:
+            self.cursor.execute(sql)
+            self.connection.commit()
+        except Exception as err:
+            print(err)
+
+    def changeTempUsername(self, tempUserID, newName):
+        sql = f"UPDATE tempUsers SET username='{newName}' WHERE tempUserID={tempUserID}"
+        try:
+            self.cursor.execute(sql)
+            self.connection.commit()
+        except Exception as err:
+            print(err)

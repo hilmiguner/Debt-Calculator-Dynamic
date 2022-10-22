@@ -21,7 +21,6 @@ class myWindow(QtWidgets.QMainWindow):
 
         self.myMainMenu = None
 
-        self.goMainMenu = False
         self.userID = None
 
         self.setWindowIcon(QIcon("resources/debt.png"))
@@ -133,13 +132,10 @@ class myWindow(QtWidgets.QMainWindow):
             warningBox.exec()
         elif result[0]:
             self.userID = result[1]
-            self.goMainMenu = True
-            self.ui.centralwidget.hide()
             from main2 import mainMenu
             self.close()
-            self.myMainMenu = mainMenu(self.userID)
+            self.myMainMenu = mainMenu(self, self.userID)
             self.myMainMenu.show()
-
 
     def action_btnRegister_2Clicked(self):
         username = self.ui.lineUsername_2.text()
