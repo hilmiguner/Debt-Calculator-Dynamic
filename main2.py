@@ -60,7 +60,6 @@ class mainMenu(QtWidgets.QMainWindow):
                 self.ui.tableRelatedPersons.setItem(ix, 1, QTableWidgetItem(str(row[1])))
                 self.ui.tableRelatedPersons.setItem(ix, 2, QTableWidgetItem(row[2]))
 
-
     def initActions(self):
         self.ui.btnExit.clicked.connect(self.action_btnExitClicked)
         self.ui.btnMinimize.clicked.connect(self.action_btnMinimizeClicked)
@@ -134,15 +133,10 @@ class mainMenu(QtWidgets.QMainWindow):
         warningBox.show()
         warningBox.exec()
 
-
-
-
-
-
-def App():
-    myApp = QtWidgets.QApplication(sys.argv)
-    myWindow = mainMenu(None, 3)
-    myWindow.show()
-    myApp.exec()
-
-App()
+# def App():
+#     myApp = QtWidgets.QApplication(sys.argv)
+#     myWindow = mainMenu(None, 3)
+#     myWindow.show()
+#     myApp.exec()
+#
+# App()

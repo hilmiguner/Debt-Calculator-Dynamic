@@ -253,7 +253,7 @@ border:none;</string>
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pageMainMenu">
       <widget class="QLabel" name="lblDebts">
@@ -535,7 +535,7 @@ border:none;</string>
         <rect>
          <x>130</x>
          <y>50</y>
-         <width>141</width>
+         <width>471</width>
          <height>31</height>
         </rect>
        </property>

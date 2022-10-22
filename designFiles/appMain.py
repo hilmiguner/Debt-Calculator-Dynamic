@@ -225,7 +225,7 @@ class Ui_MainWindow(object):
         self.pageAccountSettings = QtWidgets.QWidget()
         self.pageAccountSettings.setObjectName("pageAccountSettings")
         self.lblUsername = QtWidgets.QLabel(self.pageAccountSettings)
-        self.lblUsername.setGeometry(QtCore.QRect(130, 50, 141, 31))
+        self.lblUsername.setGeometry(QtCore.QRect(130, 50, 471, 31))
         font = QtGui.QFont()
         font.setFamily("Tw Cen MT")
         font.setPointSize(16)
@@ -413,7 +413,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

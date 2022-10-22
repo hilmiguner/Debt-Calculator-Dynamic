@@ -161,12 +161,5 @@ def App():
     window = myWindow(myApp)
     window.show()
     myApp.exec()
-    myApp.quit()
-
-    # if window.goMainMenu:
-    #     from main2 import mainMenu
-    #     mainMenuWindow = mainMenu(window.userID)
-    #     mainMenuWindow.show()
-    #     myApp.exec()
 
 App()
