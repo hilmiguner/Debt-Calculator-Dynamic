@@ -4,6 +4,11 @@
     <file>resources/gradient1.jpg</file>
   </qresource>
   <qresource prefix="Icons">
+    <file>resources/scale.png</file>
+    <file>resources/trash.png</file>
+    <file>resources/information.png</file>
+    <file>resources/plus.png</file>
+    <file>resources/screenshot.png</file>
     <file>resources/settings.png</file>
     <file>resources/add-user.png</file>
     <file>resources/remove-user.png</file>

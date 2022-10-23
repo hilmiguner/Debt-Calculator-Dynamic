@@ -122,3 +122,20 @@ class database:
             self.connection.commit()
         except Exception as err:
             print(err)
+
+    def getInfoForShoppingUI(self, userID):
+        # sql = f"SELECT * FROM shoppings WHERE userID={userID}"
+        # try:
+        #     self.cursor.execute(sql)
+        #     shoppings = self.cursor.fetchall()
+        #     shoppingIDs = []
+        #     for data in shoppings:
+        #         shoppingIDs.append(data[0])
+        #
+        #     for data in shoppings:
+        #         sql = f"SELECT * FROM whichusers WHERE shoppingID={data[0]}"
+        #         self.cursor.execute(sql)
+        #         self.cursor.fetchall()
+        #
+        # except Exception as err:
+        #     print(err)

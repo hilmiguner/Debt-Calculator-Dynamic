@@ -30,6 +30,10 @@ class mainMenu(QtWidgets.QMainWindow):
         self.ui.tableRelatedPersons.horizontalHeader().setVisible(False)
         self.ui.tableRelatedPersons.verticalHeader().setVisible(False)
 
+        self.ui.tableShoppings.hideColumn(0)
+        self.ui.tableShoppings.hideColumn(1)
+        self.ui.tableShoppings.verticalHeader().setVisible(False)
+
         self.setWindowIcon(QIcon("resources/debt.png"))
         self.setWindowTitle("Debt Calculator")
 
@@ -60,6 +64,8 @@ class mainMenu(QtWidgets.QMainWindow):
                 self.ui.tableRelatedPersons.setItem(ix, 1, QTableWidgetItem(str(row[1])))
                 self.ui.tableRelatedPersons.setItem(ix, 2, QTableWidgetItem(row[2]))
 
+        shoppings = dbManager.getInfoForShoppingUI(self.userID)
+
     def initActions(self):
         self.ui.btnExit.clicked.connect(self.action_btnExitClicked)
         self.ui.btnMinimize.clicked.connect(self.action_btnMinimizeClicked)
@@ -74,6 +80,8 @@ class mainMenu(QtWidgets.QMainWindow):
         self.ui.btnAddRelated.clicked.connect(self.action_btnAddRelatedClicked)
         self.ui.btnEditRelated.clicked.connect(self.action_btnEditRelatedClicked)
         self.ui.btnRemoveRelated.clicked.connect(self.action_btnRemoveRelatedClicked)
+
+        self.ui.btnShoppings.clicked.connect(self.action_btnShoppingsClicked)
 
     def action_btnExitClicked(self):
         self.close()
@@ -133,10 +141,14 @@ class mainMenu(QtWidgets.QMainWindow):
         warningBox.show()
         warningBox.exec()
 
-# def App():
-#     myApp = QtWidgets.QApplication(sys.argv)
-#     myWindow = mainMenu(None, 3)
-#     myWindow.show()
-#     myApp.exec()
-#
-# App()
+    def action_btnShoppingsClicked(self):
+        self.ui.stackedWidget.setCurrentWidget(self.ui.pageShoppings)
+        self.ui.btnMainMenu.show()
+
+def App():
+    myApp = QtWidgets.QApplication(sys.argv)
+    myWindow = mainMenu(None, 3)
+    myWindow.show()
+    myApp.exec()
+
+App()
