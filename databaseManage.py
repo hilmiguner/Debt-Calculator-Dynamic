@@ -124,18 +124,52 @@ class database:
             print(err)
 
     def getInfoForShoppingUI(self, userID):
-        # sql = f"SELECT * FROM shoppings WHERE userID={userID}"
-        # try:
-        #     self.cursor.execute(sql)
-        #     shoppings = self.cursor.fetchall()
-        #     shoppingIDs = []
-        #     for data in shoppings:
-        #         shoppingIDs.append(data[0])
-        #
-        #     for data in shoppings:
-        #         sql = f"SELECT * FROM whichusers WHERE shoppingID={data[0]}"
-        #         self.cursor.execute(sql)
-        #         self.cursor.fetchall()
-        #
-        # except Exception as err:
-        #     print(err)
+        sql = f"SELECT * FROM shoppings WHERE userID={userID}"
+        try:
+            self.cursor.execute(sql)
+            shoppings = self.cursor.fetchall()
+            shopDict = {}
+
+            for data in shoppings:
+                shoppingID = str(data[0])
+
+                sql = f"SELECT tempUserID FROM whichusers WHERE shoppingID={shoppingID}"
+                self.cursor.execute(sql)
+                for tempUser in self.cursor.fetchall():
+                    tempUserID = str(tempUser[0])
+                    paid = "0"
+
+                    sql = f"SELECT payedValue FROM whopayed WHERE tempUserID={tempUserID} and shoppingID={shoppingID}"
+                    self.cursor.execute(sql)
+                    paid = str(self.cursor.fetchone()[0])
+
+                    shopDict.setdefault(shoppingID, []).append((tempUserID, paid))
+            return shoppings, shopDict
+        except Exception as err:
+            print(err)
+        return -1, -1
+
+    def getShoppingByShoppingID(self, shoppingID):
+        sql = f"SELECT * FROM shoppings WHERE shoppingID={shoppingID}"
+        try:
+            self.cursor.execute(sql)
+            shopping = self.cursor.fetchone()
+
+            sql = f"SELECT tempUserID FROM whichusers WHERE shoppingID={shoppingID}"
+            self.cursor.execute(sql)
+            relatedPersons = self.cursor.fetchall()
+
+            shoppingDict = {}
+
+            for data in relatedPersons:
+                relatedPersonID = data[0]
+                sql = f"SELECT payedValue FROM whopayed WHERE shoppingID={shoppingID} and tempUserID={relatedPersonID}"
+                self.cursor.execute(sql)
+                paid = self.cursor.fetchone()[0]
+
+                shoppingDict[str(relatedPersonID)] = str(paid)
+
+            return shopping, shoppingDict
+        except Exception as err:
+            print(err)
+        return -1, -1

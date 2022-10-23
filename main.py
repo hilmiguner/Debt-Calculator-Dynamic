@@ -7,7 +7,7 @@ from databaseManage import database
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QMessageBox, QDialog
+from PyQt5.QtWidgets import QMessageBox, QDialog, QDesktopWidget
 
 class myWindow(QtWidgets.QMainWindow):
     def __init__(self, app):
@@ -17,7 +17,7 @@ class myWindow(QtWidgets.QMainWindow):
 
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
-        self.oldPos = None
+        self.oldPos = QDesktopWidget().availableGeometry().center()
 
         self.myMainMenu = None
 

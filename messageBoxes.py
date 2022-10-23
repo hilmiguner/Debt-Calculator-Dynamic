@@ -1,8 +1,10 @@
-from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QDialog, QDesktopWidget
 from PyQt5.QtCore import Qt, QPoint
 from PyQt5 import QtWidgets
 
 from databaseManage import database
+
+from datetime import date
 
 
 import string
@@ -53,6 +55,13 @@ class myMessageBox(QDialog):
 
             self.uiManager.btnNo.clicked.connect(self.accept)
             self.uiManager.btnYes.clicked.connect(action_btnYesClicked)
+
+        elif ui == "warning6":
+            from designFiles.warning6 import Ui_Dialog
+            self.uiManager = Ui_Dialog()
+            self.uiManager.setupUi(self)
+
+            self.uiManager.btnOk.clicked.connect(self.accept)
 
         elif ui == "changePassword":
             from designFiles.changePassword import Ui_Dialog
@@ -174,10 +183,127 @@ class myMessageBox(QDialog):
 
             self.uiManager.lineRelatedPerson.textChanged.connect(action_lineRelatedPersonTextChanged)
 
+        elif ui == "shoppingInfo":
+            from designFiles.shoppingInfo import Ui_Dialog
+            self.uiManager = Ui_Dialog()
+            self.uiManager.setupUi(self)
+
+            self.uiManager.btnOk.clicked.connect(self.accept)
+
+            shoppingInfo = args[0]
+            shoppingDict = args[1]
+
+            self.uiManager.lblShoppingName.setText(f"Shopping Name: {shoppingInfo[1]}")
+            self.uiManager.lblShoppingCost.setText(f"Shopping Cost: {shoppingInfo[2]}")
+            self.uiManager.lblShoppingDate.setText(f"Shopping Date: {shoppingInfo[3]}")
+
+            labelFont = self.uiManager.lblShoppingName.font()
+
+            verticalLayout = QtWidgets.QVBoxLayout()
+
+            for tempUserID in shoppingDict:
+                label = QtWidgets.QLabel()
+                label.setStyleSheet("""color: #D9F1F5;""")
+
+                dbManager = database()
+                tempUserName = dbManager.getRelatedPersonByTempUserID(tempUserID, "username")[0]
+
+                label.setText(f"'{tempUserName}' paid {shoppingDict[tempUserID]}.")
+                label.setFont(labelFont)
+
+                verticalLayout.addWidget(label)
+
+            widget = QtWidgets.QWidget()
+            widget.setLayout(verticalLayout)
+            self.uiManager.scrollArea.setWidget(widget)
+
+        elif ui == "addShopping":
+            from designFiles.addShopping import Ui_Dialog
+            self.uiManager = Ui_Dialog()
+            self.uiManager.setupUi(self)
+
+            tempUserID_to_tempUserName = args[0]
+
+            def action_lineShoppingCostTextChanged(text):
+                for ix, char in enumerate(text):
+                    if char != "." and char not in string.digits:
+                        pos = self.uiManager.lineShoppingCost.cursorPosition()
+                        text = text[:ix] + text[ix + 1:]
+                        self.uiManager.lineShoppingCost.setText(text)
+                        self.uiManager.lineShoppingCost.setCursorPosition(pos - 1)
+
+            def action_btnAddRelatedPersonClicked():
+                if len(comboBoxes) == len(tempUserID_to_tempUserName):
+                    box = myMessageBox("warning6")
+                    box.show()
+                    box.exec()
+                    return
+
+                comboBox = QtWidgets.QComboBox()
+                comboBox.setFont(self.uiManager.btnAdd.font())
+                policy = comboBox.sizePolicy()
+                policy.setHorizontalPolicy(QtWidgets.QSizePolicy.Policy.Expanding)
+                comboBox.setSizePolicy(policy)
+                comboBox.setMaximumSize(200, 50)
+                comboBox.setStyleSheet("""color: #D9F1F5;
+background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.1875 rgba(0, 210, 255, 255), stop:1 rgba(0, 255, 173, 255));
+border-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.1875 rgba(0, 210, 255, 255), stop:1 rgba(0, 255, 173, 255));
+border-radius: 5px;""")
+                comboBoxes.append(comboBox)
+                for key in tempUserID_to_tempUserName:
+                    comboBox.addItem(tempUserID_to_tempUserName[key])
+
+                line = QtWidgets.QLineEdit()
+                line.setPlaceholderText("Paid Value")
+                policy = line.sizePolicy()
+                policy.setVerticalPolicy(QtWidgets.QSizePolicy.Policy.Expanding)
+                line.setSizePolicy(policy)
+                line.setMaximumSize(500, 50)
+                line.setStyleSheet("""background-color: #D1F0F3;
+border-radius: 15px;
+padding-left: 5px;
+color: #069EAD;""")
+                lineEdits.append(line)
+
+                button = QtWidgets.QPushButton()
+                button.setStyleSheet("""background: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.1875 rgba(0, 210, 255, 255), stop:1 rgba(0, 255, 173, 255));
+color: #D9F1F5;
+border:none;
+padding: 5px;""")
+                button.setFont(self.uiManager.btnAdd.font())
+                policy = button.sizePolicy()
+                policy.setVerticalPolicy(QtWidgets.QSizePolicy.Policy.Expanding)
+                button.setSizePolicy(policy)
+                button.setText("Remove Person")
+                button.setMaximumSize(400, 50)
+                buttons.append(button)
+
+                row = gridLayout.rowCount()
+                gridLayout.addWidget(comboBox, row + 1, 0)
+                gridLayout.addWidget(line, row + 1, 1)
+                gridLayout.addWidget(button, row + 1, 2)
+
+
+            self.uiManager.btnCancel.clicked.connect(self.accept)
+            self.uiManager.lineShoppingCost.textChanged.connect(action_lineShoppingCostTextChanged)
+            self.uiManager.btnAddRelatedPerson.clicked.connect(action_btnAddRelatedPersonClicked)
+
+            self.uiManager.lineShoppingDate.setText(str(date.today()))
+
+            gridLayout = QtWidgets.QGridLayout()
+
+            comboBoxes = []
+            lineEdits = []
+            buttons = []
+
+
+            widget = QtWidgets.QWidget()
+            widget.setLayout(gridLayout)
+            self.uiManager.scrollArea.setWidget(widget)
 
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
-        self.oldPos = None
+        self.oldPos = QDesktopWidget().availableGeometry().center()
 
     def mousePressEvent(self, event):
         self.oldPos = event.globalPos()

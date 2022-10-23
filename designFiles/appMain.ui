@@ -188,7 +188,7 @@ border-bottom-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pageMainMenu">
       <widget class="QWidget" name="widget_10" native="true">

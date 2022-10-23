@@ -7,7 +7,7 @@ from messageBoxes import myMessageBox
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt5.QtWidgets import QTableWidgetItem, QDesktopWidget
 
 class mainMenu(QtWidgets.QMainWindow):
     def __init__(self, parentWindow, userID):
@@ -21,7 +21,7 @@ class mainMenu(QtWidgets.QMainWindow):
 
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
-        self.oldPos = None
+        self.oldPos = QDesktopWidget().availableGeometry().center()
 
         self.ui.btnMainMenu.close()
 
@@ -64,7 +64,22 @@ class mainMenu(QtWidgets.QMainWindow):
                 self.ui.tableRelatedPersons.setItem(ix, 1, QTableWidgetItem(str(row[1])))
                 self.ui.tableRelatedPersons.setItem(ix, 2, QTableWidgetItem(row[2]))
 
-        shoppings = dbManager.getInfoForShoppingUI(self.userID)
+        shoppings, shopDict = dbManager.getInfoForShoppingUI(self.userID)
+        if shoppings != -1 and shopDict != -1:
+            for ix, row in enumerate(shoppings):
+                self.ui.tableShoppings.setRowCount(ix + 1)
+                self.ui.tableShoppings.setItem(ix, 0, QTableWidgetItem(str(row[0])))
+                self.ui.tableShoppings.setItem(ix, 1, QTableWidgetItem(str(row[4])))
+                self.ui.tableShoppings.setItem(ix, 2, QTableWidgetItem(row[1]))
+                self.ui.tableShoppings.setItem(ix, 3, QTableWidgetItem(str(row[2])))
+                self.ui.tableShoppings.setItem(ix, 4, QTableWidgetItem(row[3]))
+
+                relatedsL = []
+                for tempUserID in shopDict[str(row[0])]:
+                    relatedsL.append(dbManager.getRelatedPersonByTempUserID(tempUserID[0], "username")[0])
+                relateds = ", ".join(relatedsL)
+
+                self.ui.tableShoppings.setItem(ix, 5, QTableWidgetItem(relateds))
 
     def initActions(self):
         self.ui.btnExit.clicked.connect(self.action_btnExitClicked)
@@ -82,6 +97,8 @@ class mainMenu(QtWidgets.QMainWindow):
         self.ui.btnRemoveRelated.clicked.connect(self.action_btnRemoveRelatedClicked)
 
         self.ui.btnShoppings.clicked.connect(self.action_btnShoppingsClicked)
+        self.ui.tableShoppings.itemDoubleClicked.connect(self.action_tableShoppingsItemDoubleClicked)
+        self.ui.btnAddShopping.clicked.connect(self.action_btnAddShoppingClicked)
 
     def action_btnExitClicked(self):
         self.close()
@@ -144,6 +161,30 @@ class mainMenu(QtWidgets.QMainWindow):
     def action_btnShoppingsClicked(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.pageShoppings)
         self.ui.btnMainMenu.show()
+
+    def action_tableShoppingsItemDoubleClicked(self, item):
+        row = item.row()
+        shoppingID = self.ui.tableShoppings.item(row, 0).text()
+
+        dbManager = database()
+        shoppingInfo, shoppingDict = dbManager.getShoppingByShoppingID(shoppingID)
+        if shoppingInfo != -1 and shoppingDict != -1:
+            shoppingInfoBox = myMessageBox("shoppingInfo", shoppingInfo, shoppingDict)
+            shoppingInfoBox.show()
+            shoppingInfoBox.exec()
+
+    def action_btnAddShoppingClicked(self):
+        dbManager = database()
+        result = dbManager.getRelatedPerson(self.userID, "tempUserID", "username")
+
+        tempUserID_to_tempUserName = {}
+
+        for tempUser in result:
+            tempUserID_to_tempUserName[str(tempUser[0])] = tempUser[1]
+
+        addShoppingBox = myMessageBox("addShopping", tempUserID_to_tempUserName)
+        addShoppingBox.show()
+        addShoppingBox.exec()
 
 def App():
     myApp = QtWidgets.QApplication(sys.argv)
