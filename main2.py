@@ -186,10 +186,10 @@ class mainMenu(QtWidgets.QMainWindow):
         addShoppingBox.show()
         addShoppingBox.exec()
 
-def App():
-    myApp = QtWidgets.QApplication(sys.argv)
-    myWindow = mainMenu(None, 3)
-    myWindow.show()
-    myApp.exec()
-
-App()
+# def App():
+#     myApp = QtWidgets.QApplication(sys.argv)
+#     myWindow = mainMenu(None, 3)
+#     myWindow.show()
+#     myApp.exec()
+#
+# App()
