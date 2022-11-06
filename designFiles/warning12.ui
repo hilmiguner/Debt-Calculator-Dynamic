@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>432</width>
-    <height>280</height>
+    <height>360</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
      <x>0</x>
      <y>-1</y>
      <width>431</width>
-     <height>281</height>
+     <height>361</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -39,11 +39,11 @@ border-radius: 20px;
 background-image: url(:/backgrounds/resources/gradient3.jpg);
 </string>
    </property>
-   <widget class="QPushButton" name="btnOk">
+   <widget class="QPushButton" name="btnNo">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>210</y>
+      <x>230</x>
+      <y>300</y>
       <width>171</width>
       <height>51</height>
      </rect>
@@ -63,41 +63,14 @@ border:none;
 </string>
     </property>
     <property name="text">
-     <string>OK</string>
+     <string>NO</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lbl1">
+   <widget class="QLabel" name="lblInfo1">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>130</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Tw Cen MT</family>
-      <pointsize>22</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: #D9F1F5;
-background: rgba(0,0,0,0);
-border:none;</string>
-    </property>
-    <property name="text">
-     <string>Username</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lbl2">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>160</y>
       <width>391</width>
       <height>31</height>
      </rect>
@@ -114,10 +87,10 @@ background: rgba(0,0,0,0);
 border:none;</string>
     </property>
     <property name="text">
-     <string>has been taken by another user !</string>
+     <string>Are you sure</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="lblWarningIcon">
@@ -144,12 +117,39 @@ border:none;</string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="lblUsername">
+   <widget class="QPushButton" name="btnYes">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>130</y>
-      <width>261</width>
+      <x>30</x>
+      <y>300</y>
+      <width>171</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tw Cen MT</family>
+      <pointsize>24</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.1875 rgba(0, 210, 255, 255), stop:1 rgba(0, 255, 173, 255));
+color: #D9F1F5;
+border:none;
+</string>
+    </property>
+    <property name="text">
+     <string>YES</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblInfo3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>210</y>
+      <width>391</width>
       <height>31</height>
      </rect>
     </property>
@@ -165,10 +165,64 @@ background: rgba(0,0,0,0);
 border:none;</string>
     </property>
     <property name="text">
-     <string/>
+     <string>shopping named and cost are</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblInfo4">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>250</y>
+      <width>391</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tw Cen MT</family>
+      <pointsize>22</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #D9F1F5;
+background: rgba(0,0,0,0);
+border:none;</string>
+    </property>
+    <property name="text">
+     <string>shopping name and cost</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblInfo2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>170</y>
+      <width>391</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tw Cen MT</family>
+      <pointsize>22</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #D9F1F5;
+background: rgba(0,0,0,0);
+border:none;</string>
+    </property>
+    <property name="text">
+     <string>want to delete</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>

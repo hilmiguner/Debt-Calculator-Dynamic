@@ -9,7 +9,7 @@ class database:
                 password="mysql1234",
                 database="debt-calculator"
             )
-            self.cursor = self.connection.cursor()
+            self.cursor = self.connection.cursor(buffered=True)
         except Exception as err:
             print(err)
 
@@ -129,7 +129,6 @@ class database:
             self.cursor.execute(sql)
             shoppings = self.cursor.fetchall()
             shopDict = {}
-
             for data in shoppings:
                 shoppingID = str(data[0])
 
@@ -137,7 +136,6 @@ class database:
                 self.cursor.execute(sql)
                 for tempUser in self.cursor.fetchall():
                     tempUserID = str(tempUser[0])
-                    paid = "0"
 
                     sql = f"SELECT payedValue FROM whopayed WHERE tempUserID={tempUserID} and shoppingID={shoppingID}"
                     self.cursor.execute(sql)
@@ -173,3 +171,66 @@ class database:
         except Exception as err:
             print(err)
         return -1, -1
+
+    def getWhichUsersByShoppingID(self, shoppingID):
+        sql = f"SELECT * FROM whichusers WHERE shoppingID={shoppingID}"
+        try:
+            self.cursor.execute(sql)
+            data = self.cursor.fetchall()
+            return data
+        except Exception as err:
+            print(err)
+
+    def getWhoPayedByTempUserIDandShoppingID(self, tempUserID, shoppingID):
+        sql = f"SELECT * FROM whopayed WHERE tempUserID={tempUserID} AND shoppingID={shoppingID}"
+        try:
+            self.cursor.execute(sql)
+            data = self.cursor.fetchone()
+            return data
+        except Exception as err:
+            print(err)
+
+    def addWhichUsersEntry(self, tempUserID, shoppingID):
+        sql = f"INSERT INTO whichusers(tempUserID,shoppingID) VALUES({tempUserID},{shoppingID})"
+        try:
+            self.cursor.execute(sql)
+            self.connection.commit()
+        except Exception as err:
+            print(err)
+
+    def addWhoPayedEntry(self, tempUserID, shoppingID, payedValue):
+        sql = f"INSERT INTO whopayed(tempUserID,shoppingID,payedValue) VALUES({tempUserID},{shoppingID},{payedValue})"
+        try:
+            self.cursor.execute(sql)
+            self.connection.commit()
+        except Exception as err:
+            print(err)
+
+    def addShopping(self, shoppingName, shoppingCost, shoppingDate, userID, whichTempUserPaidHowMuch):
+        sql = f"INSERT INTO shoppings(shoppingName,shoppingCost,shoppingDate,userID) VALUES('{shoppingName}',{shoppingCost},'{shoppingDate}',{userID})"
+        try:
+            self.cursor.execute(sql)
+            self.connection.commit()
+            self.cursor.execute("SELECT LAST_INSERT_ID() FROM shoppings")
+            lastShoppingID = self.cursor.fetchone()[0]
+            for tempUserID in whichTempUserPaidHowMuch.keys():
+                self.addWhichUsersEntry(tempUserID, lastShoppingID)
+                self.addWhoPayedEntry(tempUserID, lastShoppingID, whichTempUserPaidHowMuch[tempUserID])
+        except Exception as err:
+            print(err)
+
+    def deleteShoppingByShoppingID(self, shoppingID):
+        sql1 = f"DELETE FROM whopayed WHERE shoppingID={shoppingID}"
+        sql2 = f"DELETE FROM whichusers WHERE shoppingID={shoppingID}"
+        sql3 = f"DELETE FROM shoppings WHERE shoppingID={shoppingID}"
+        try:
+            self.cursor.execute(sql1)
+            self.connection.commit()
+            self.cursor.execute(sql2)
+            self.connection.commit()
+            self.cursor.execute(sql3)
+            self.connection.commit()
+        except Exception as err:
+            print("hata", err)
+
+

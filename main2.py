@@ -65,7 +65,7 @@ class mainMenu(QtWidgets.QMainWindow):
                 self.ui.tableRelatedPersons.setItem(ix, 2, QTableWidgetItem(row[2]))
 
         shoppings, shopDict = dbManager.getInfoForShoppingUI(self.userID)
-        if shoppings != -1 and shopDict != -1:
+        if shoppings != [] and shopDict != {}:
             for ix, row in enumerate(shoppings):
                 self.ui.tableShoppings.setRowCount(ix + 1)
                 self.ui.tableShoppings.setItem(ix, 0, QTableWidgetItem(str(row[0])))
@@ -80,6 +80,8 @@ class mainMenu(QtWidgets.QMainWindow):
                 relateds = ", ".join(relatedsL)
 
                 self.ui.tableShoppings.setItem(ix, 5, QTableWidgetItem(relateds))
+        else:
+            self.ui.tableShoppings.setRowCount(0)
 
     def initActions(self):
         self.ui.btnExit.clicked.connect(self.action_btnExitClicked)
@@ -99,6 +101,8 @@ class mainMenu(QtWidgets.QMainWindow):
         self.ui.btnShoppings.clicked.connect(self.action_btnShoppingsClicked)
         self.ui.tableShoppings.itemDoubleClicked.connect(self.action_tableShoppingsItemDoubleClicked)
         self.ui.btnAddShopping.clicked.connect(self.action_btnAddShoppingClicked)
+        self.ui.btnEditShopping.clicked.connect(self.action_btnEditShoppingClicked)
+        self.ui.btnRemoveShopping.clicked.connect(self.action_btnRemoveShoppingClicked)
 
     def action_btnExitClicked(self):
         self.close()
@@ -182,14 +186,55 @@ class mainMenu(QtWidgets.QMainWindow):
         for tempUser in result:
             tempUserID_to_tempUserName[str(tempUser[0])] = tempUser[1]
 
-        addShoppingBox = myMessageBox("addShopping", tempUserID_to_tempUserName)
+        addShoppingBox = myMessageBox("addShopping", tempUserID_to_tempUserName, self.userID, self)
         addShoppingBox.show()
         addShoppingBox.exec()
 
-# def App():
-#     myApp = QtWidgets.QApplication(sys.argv)
-#     myWindow = mainMenu(None, 3)
-#     myWindow.show()
-#     myApp.exec()
-#
-# App()
+    def action_btnEditShoppingClicked(self):
+        if not self.ui.tableShoppings.selectedItems():
+            warningBox = myMessageBox("warning4")
+            warningBox.show()
+            warningBox.exec()
+            return
+
+        selectedRow = self.ui.tableShoppings.selectedItems()[0].row()
+        selectedShoppingID = self.ui.tableShoppings.item(selectedRow, 0).text()
+        selectedShoppingName = self.ui.tableShoppings.item(selectedRow, 2).text()
+        selectedShoppingCost = self.ui.tableShoppings.item(selectedRow, 3).text()
+        selectedShoppingDate = self.ui.tableShoppings.item(selectedRow, 4).text()
+
+        dbManager = database()
+        result = dbManager.getRelatedPerson(self.userID, "tempUserID", "username")
+
+        tempUserID_to_tempUserName = {}
+
+        for tempUser in result:
+            tempUserID_to_tempUserName[str(tempUser[0])] = tempUser[1]
+
+        editShoppingBox = myMessageBox("editShopping", tempUserID_to_tempUserName, self.userID, self, selectedShoppingID, selectedShoppingName, selectedShoppingCost, selectedShoppingDate)
+        editShoppingBox.show()
+        editShoppingBox.exec()
+
+    def action_btnRemoveShoppingClicked(self):
+        if not self.ui.tableShoppings.selectedItems():
+            warningBox = myMessageBox("warning4")
+            warningBox.show()
+            warningBox.exec()
+            return
+
+        selectedRow = self.ui.tableShoppings.selectedItems()[0].row()
+        selectedShoppingID = self.ui.tableShoppings.item(selectedRow, 0).text()
+        selectedShoppingName = self.ui.tableShoppings.item(selectedRow, 2).text()
+        selectedShoppingCost = self.ui.tableShoppings.item(selectedRow, 3).text()
+
+        deleteBox = myMessageBox("warning12", selectedShoppingID, selectedShoppingName, selectedShoppingCost, self)
+        deleteBox.show()
+        deleteBox.exec()
+
+def App():
+    myApp = QtWidgets.QApplication(sys.argv)
+    myWindow = mainMenu(None, 3)
+    myWindow.show()
+    myApp.exec()
+
+App()
