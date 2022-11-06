@@ -159,8 +159,8 @@ class myMessageBox(QDialog):
                 currentPassword = self.uiManager.linePassword.text()
                 newPassword = self.uiManager.linePassword_2.text()
 
-                dbManager = database()
-                if not dbManager.checkPassword(args[0], currentPassword):
+                db = database()
+                if not db.checkPassword(args[0], currentPassword):
                     self.uiManager.widget.setGeometry(0, 0, 421, 341)
                     self.uiManager.lblInfo.setText(text1)
                     return
@@ -169,7 +169,7 @@ class myMessageBox(QDialog):
                     self.uiManager.lblInfo.setText(text2)
                     return
 
-                dbManager.changePassword(args[0], newPassword)
+                db.changePassword(args[0], newPassword)
                 self.accept()
 
             self.uiManager.btnChange.clicked.connect(action_btnChangeClicked)
@@ -185,17 +185,17 @@ class myMessageBox(QDialog):
             self.uiManager.setupUi(self)
 
             def action_btnAddClicked():
-                tempUserName = self.uiManager.lineRelatedPerson.text()
+                userName = self.uiManager.lineRelatedPerson.text()
 
-                dbManager = database()
-                relatedPersons = dbManager.getRelatedPerson(args[1], "username")
+                db = database()
+                relatedPersons = db.getRelatedPerson(args[1], "username")
                 for relatedPerson in relatedPersons:
-                    if relatedPerson[0] == tempUserName:
+                    if relatedPerson[0] == userName:
                         warningBox = myMessageBox("warning11")
                         warningBox.show()
                         warningBox.exec()
                         return
-                dbManager.addTempUser(args[1], tempUserName)
+                db.addTempUser(args[1], userName)
 
                 args[0].loadDatas()
 
@@ -760,4 +760,3 @@ padding: 5px;""")
         delta = QPoint(event.globalPos() - self.oldPos)
         self.move(self.x() + delta.x(), self.y() + delta.y())
         self.oldPos = event.globalPos()
-
