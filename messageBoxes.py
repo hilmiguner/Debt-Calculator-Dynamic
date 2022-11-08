@@ -119,6 +119,12 @@ class myMessageBox(QDialog):
             self.uiManager.btnYes.clicked.connect(action_btnYesClicked)
             self.uiManager.btnNo.clicked.connect(self.accept)
 
+        elif ui == "warning13":
+            from designFiles.warning13 import Ui_Dialog
+            self.uiManager = Ui_Dialog()
+            self.uiManager.setupUi(self)
+
+            self.uiManager.btnOk.clicked.connect(self.accept)
 
         elif ui == "changePassword":
             from designFiles.changePassword import Ui_Dialog

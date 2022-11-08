@@ -233,4 +233,10 @@ class database:
         except Exception as err:
             print("hata", err)
 
-
+    def checkIsUserRelatedAnyShoppingByTempUserID(self, tempUserID):
+        sql = f"SELECT COUNT(*) FROM whichusers WHERE tempUserID={tempUserID}"
+        try:
+            self.cursor.execute(sql)
+            return int(self.cursor.fetchone()[0])
+        except Exception as err:
+            print(err)

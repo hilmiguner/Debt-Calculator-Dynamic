@@ -156,11 +156,19 @@ class mainMenu(QtWidgets.QMainWindow):
             return
         rowNumber = self.ui.tableRelatedPersons.selectedItems()[0].row()
         tempUserID = self.ui.tableRelatedPersons.item(rowNumber, 0).text()
+
         dbManager = database()
-        tempUsername = dbManager.getRelatedPersonByTempUserID(tempUserID, "username")[0]
-        warningBox = myMessageBox("warning5", self, tempUserID, tempUsername)
-        warningBox.show()
-        warningBox.exec()
+        if dbManager.checkIsUserRelatedAnyShoppingByTempUserID(tempUserID) == 0:
+            tempUsername = dbManager.getRelatedPersonByTempUserID(tempUserID, "username")[0]
+            warningBox = myMessageBox("warning5", self, tempUserID, tempUsername)
+            warningBox.show()
+            warningBox.exec()
+            return
+        else:
+            warningBox = myMessageBox("warning13")
+            warningBox.show()
+            warningBox.exec()
+            return
 
     def action_btnShoppingsClicked(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.pageShoppings)

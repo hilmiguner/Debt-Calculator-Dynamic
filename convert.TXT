@@ -14,6 +14,7 @@ pyuic5 warning9.ui -o warning9.py
 pyuic5 warning10.ui -o warning10.py
 pyuic5 warning11.ui -o warning11.py
 pyuic5 warning12.ui -o warning12.py
+pyuic5 warning13.ui -o warning13.py
 pyuic5 changePassword.ui -o changePassword.py
 pyuic5 addRelatedPerson.ui -o addRelatedPerson.py
 pyuic5 editRelatedPerson.ui -o editRelatedPerson.py
