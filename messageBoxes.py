@@ -124,7 +124,16 @@ class myMessageBox(QDialog):
             self.uiManager = Ui_Dialog()
             self.uiManager.setupUi(self)
 
-            self.uiManager.btnOk.clicked.connect(self.accept)
+
+            self.uiManager.btnNo.clicked.connect(self.accept)
+
+        elif ui == "warning14":
+            from designFiles.warning14 import Ui_Dialog
+            self.uiManager = Ui_Dialog()
+            self.uiManager.setupUi(self)
+
+            self.uiManager.btnYes.clicked.connect(self.accept)
+            self.uiManager.btnNo.clicked.connect(self.reject)
 
         elif ui == "changePassword":
             from designFiles.changePassword import Ui_Dialog
@@ -463,7 +472,23 @@ padding: 5px;""")
                         if cmbBox.currentText() == tempUserID_to_tempUserName[temp] and lineEdits[ix].text() != "":
                             tempUserID_to_paidValue[temp] = float(lineEdits[ix].text())
                             break
-
+                costPerPerson = float(shoppingCost)/len(comboBoxes)
+                isThereDebt = False
+                for key in list(tempUserID_to_paidValue.keys()):
+                    if float(tempUserID_to_paidValue[key]) != costPerPerson:
+                        isThereDebt = True
+                        break
+                if not isThereDebt:
+                    warningBox = myMessageBox("warning14")
+                    warningBox.show()
+                    response = warningBox.exec()
+                    if int(response) == 1:
+                        db = database()
+                        db.addShopping(shoppingName, shoppingCost, shoppingDate, userID, tempUserID_to_paidValue)
+                        args[2].loadDatas()
+                        self.accept()
+                    elif int(response) == 0:
+                        return
                 db = database()
                 db.addShopping(shoppingName, shoppingCost, shoppingDate, userID, tempUserID_to_paidValue)
                 args[2].loadDatas()

@@ -34,6 +34,12 @@ class mainMenu(QtWidgets.QMainWindow):
         self.ui.tableShoppings.hideColumn(1)
         self.ui.tableShoppings.verticalHeader().setVisible(False)
 
+        self.ui.tableDebts.hideColumn(0)
+        self.ui.tableDebts.hideColumn(1)
+        self.ui.tableDebts.hideColumn(2)
+        self.ui.tableDebts.hideColumn(6)
+        self.ui.tableDebts.verticalHeader().setVisible(False)
+
         self.setWindowIcon(QIcon("resources/debt.png"))
         self.setWindowTitle("Debt Calculator")
 
@@ -83,6 +89,21 @@ class mainMenu(QtWidgets.QMainWindow):
         else:
             self.ui.tableShoppings.setRowCount(0)
 
+        dbManager.calculateDebtsByUserID(self.userID)
+
+        debts = dbManager.getDebtsForTableByUserID(self.userID)
+        for ix, debt in enumerate(debts):
+            self.ui.tableDebts.setRowCount(ix + 1)
+            self.ui.tableDebts.setItem(ix, 0, QTableWidgetItem(str(debt[0])))
+            self.ui.tableDebts.setItem(ix, 1, QTableWidgetItem(str(debt[1])))
+            self.ui.tableDebts.setItem(ix, 2, QTableWidgetItem(str(debt[2])))
+            self.ui.tableDebts.setItem(ix, 3, QTableWidgetItem(str(debt[3])))
+            self.ui.tableDebts.setItem(ix, 4, QTableWidgetItem(str(debt[4])))
+            self.ui.tableDebts.setItem(ix, 5, QTableWidgetItem(str(debt[5])))
+            self.ui.tableDebts.setItem(ix, 6, QTableWidgetItem(str(debt[6])))
+        if not debts:
+            self.ui.tableDebts.setRowCount(0)
+
     def initActions(self):
         self.ui.btnExit.clicked.connect(self.action_btnExitClicked)
         self.ui.btnMinimize.clicked.connect(self.action_btnMinimizeClicked)
@@ -104,6 +125,7 @@ class mainMenu(QtWidgets.QMainWindow):
         self.ui.btnEditShopping.clicked.connect(self.action_btnEditShoppingClicked)
         self.ui.btnRemoveShopping.clicked.connect(self.action_btnRemoveShoppingClicked)
 
+        self.ui.btnDebts.clicked.connect(self.action_btnDebtsClicked)
     def action_btnExitClicked(self):
         self.close()
 
@@ -239,10 +261,6 @@ class mainMenu(QtWidgets.QMainWindow):
         deleteBox.show()
         deleteBox.exec()
 
-def App():
-    myApp = QtWidgets.QApplication(sys.argv)
-    myWindow = mainMenu(None, 3)
-    myWindow.show()
-    myApp.exec()
-
-App()
+    def action_btnDebtsClicked(self):
+        self.ui.stackedWidget.setCurrentWidget(self.ui.pageDebts)
+        self.ui.btnMainMenu.show()

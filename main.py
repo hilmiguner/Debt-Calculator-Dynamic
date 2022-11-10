@@ -148,13 +148,17 @@ class myWindow(QtWidgets.QMainWindow):
                 warningBox.show()
                 warningBox.exec()
                 return
-            respond = dbManager.addUser(username, password)
-            if respond != -1:
-                userID = respond
+            self.userID = dbManager.addUser(username, password)
+            from main2 import mainMenu
+            self.close()
+            self.myMainMenu = mainMenu(self, self.userID)
+            self.myMainMenu.show()
+
         else:
             warningBox = myMessageBox("warning1", username)
             warningBox.show()
             warningBox.exec()
+            return
 
 def App():
     myApp = QtWidgets.QApplication(sys.argv)

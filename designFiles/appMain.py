@@ -526,6 +526,50 @@ class Ui_MainWindow(object):
         self.lblIconWarning.setAlignment(QtCore.Qt.AlignCenter)
         self.lblIconWarning.setObjectName("lblIconWarning")
         self.stackedWidget.addWidget(self.pageShoppings)
+        self.pageDebts = QtWidgets.QWidget()
+        self.pageDebts.setObjectName("pageDebts")
+        self.tableDebts = QtWidgets.QTableWidget(self.pageDebts)
+        self.tableDebts.setGeometry(QtCore.QRect(30, 10, 321, 261))
+        self.tableDebts.setStyleSheet("QTableWidget::item {border:2px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.1875 rgba(0, 210, 255, 255), stop:1 rgba(0, 255, 173, 255));\n"
+"border-radius:5px;\n"
+"color: #D9F1F5;}\n"
+"\n"
+"QTableWidget::item:selected{\n"
+"background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.1875 rgba(0, 210, 255, 255), stop:1 rgba(0, 255, 173, 255));\n"
+"}\n"
+"\n"
+"QScrollBar {\n"
+"background: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.1875 rgba(0, 210, 255, 255), stop:1 rgba(0, 255, 173, 255));\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {background:none;}\n"
+"QScrollBar::add-line:vertical {background: none;}\n"
+"QScrollBar::sub-line:vertical {background: none;}\n"
+"\n"
+"QScrollBar::handle:horizontal {background:none;}\n"
+"QScrollBar::add-line:horizontal {background: none;}\n"
+"QScrollBar::sub-line:horizontal {background: none;}")
+        self.tableDebts.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableDebts.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.tableDebts.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.tableDebts.setObjectName("tableDebts")
+        self.tableDebts.setColumnCount(7)
+        self.tableDebts.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableDebts.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableDebts.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableDebts.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableDebts.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableDebts.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableDebts.setHorizontalHeaderItem(5, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableDebts.setHorizontalHeaderItem(6, item)
+        self.stackedWidget.addWidget(self.pageDebts)
         self.widget_2 = QtWidgets.QWidget(self.widget)
         self.widget_2.setGeometry(QtCore.QRect(520, 300, 131, 51))
         self.widget_2.setObjectName("widget_2")
@@ -606,5 +650,19 @@ class Ui_MainWindow(object):
         self.lblEditShopping.setText(_translate("MainWindow", "Edit Shopping"))
         self.lblRemoveShopping.setText(_translate("MainWindow", "Remove Shopping"))
         self.lblInfo.setText(_translate("MainWindow", "To see more information double click."))
+        item = self.tableDebts.horizontalHeaderItem(0)
+        item.setText(_translate("MainWindow", "debtID"))
+        item = self.tableDebts.horizontalHeaderItem(1)
+        item.setText(_translate("MainWindow", "tempUser1ID"))
+        item = self.tableDebts.horizontalHeaderItem(2)
+        item.setText(_translate("MainWindow", "tempUser2ID"))
+        item = self.tableDebts.horizontalHeaderItem(3)
+        item.setText(_translate("MainWindow", "Debtor"))
+        item = self.tableDebts.horizontalHeaderItem(4)
+        item.setText(_translate("MainWindow", "Payee"))
+        item = self.tableDebts.horizontalHeaderItem(5)
+        item.setText(_translate("MainWindow", "Debt"))
+        item = self.tableDebts.horizontalHeaderItem(6)
+        item.setText(_translate("MainWindow", "UserID"))
         self.lblLogOut.setText(_translate("MainWindow", "Log Out"))
 import resource_rc

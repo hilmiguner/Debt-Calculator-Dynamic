@@ -240,3 +240,80 @@ class database:
             return int(self.cursor.fetchone()[0])
         except Exception as err:
             print(err)
+
+    def calculateDebtsByUserID(self, userID):
+        sql = f"SELECT shoppingID FROM shoppings WHERE userID={userID}"
+        debtDict = {}
+        try:
+            self.cursor.execute(sql)
+            shoppingIDs = self.cursor.fetchall()
+            for shoppingID in shoppingIDs:
+                self.cursor.execute(f"SELECT tempUserID FROM whichusers WHERE shoppingID={shoppingID[0]}")
+                userIDs = self.cursor.fetchall()
+                self.cursor.execute(f"SELECT shoppingCost FROM shoppings WHERE shoppingID={shoppingID[0]}")
+                shoppingTotalCost = float(self.cursor.fetchone()[0])
+                debtDict[str(shoppingID[0])] = []
+                debtDict[str(shoppingID[0])].append(shoppingTotalCost)
+                for tempUserID in userIDs:
+                    self.cursor.execute(f"SELECT payedValue FROM whopayed WHERE tempUserID={tempUserID[0]} AND shoppingID={shoppingID[0]}")
+                    paidValue = self.cursor.fetchone()[0]
+                    debtDict[str(shoppingID[0])].append((str(tempUserID[0]), paidValue))
+            debtors_to_payes = {}
+            for debtKey in debtDict.keys():
+                debtors = {}
+                payees = {}
+                relatedPersonNum = len(debtDict[debtKey][1:])
+                costPerPerson = debtDict[debtKey][0]/relatedPersonNum
+                for i in debtDict[debtKey][1:]:
+                    if i[1] < costPerPerson:
+                        debtors.setdefault(i[0], 0)
+                        debtors[i[0]] += costPerPerson - i[1]
+                    elif i[1] > costPerPerson:
+                        payees.setdefault(i[0], 0)
+                        payees[i[0]] += i[1] - costPerPerson
+                for debtorKey in list(debtors.keys()):
+                    while True:
+                        if debtors[debtorKey] == payees[list(payees.keys())[0]]:
+                            debtors_to_payes.setdefault(f"{debtorKey},{list(payees.keys())[0]}", 0)
+                            debtors_to_payes[f"{debtorKey},{list(payees.keys())[0]}"] += debtors[debtorKey]
+                            payees.pop(list(payees.keys())[0])
+                            debtors.pop(debtorKey)
+                            break
+                        elif debtors[debtorKey] < payees[list(payees.keys())[0]]:
+                            debtors_to_payes.setdefault(f"{debtorKey},{list(payees.keys())[0]}", 0)
+                            debtors_to_payes[f"{debtorKey},{list(payees.keys())[0]}"] += debtors[debtorKey]
+                            payees[list(payees.keys())[0]] -= debtors[debtorKey]
+                            debtors.pop(debtorKey)
+                            break
+                        elif debtors[debtorKey] > payees[list(payees.keys())[0]]:
+                            debtors_to_payes.setdefault(f"{debtorKey},{list(payees.keys())[0]}", 0)
+                            debtors_to_payes[f"{debtorKey},{list(payees.keys())[0]}"] += payees[list(payees.keys())[0]]
+                            debtors[debtorKey] -= payees[list(payees.keys())[0]]
+                            payees.pop(list(payees.keys())[0])
+                            continue
+            sql = f"DELETE FROM debts WHERE userID={userID}"
+            self.cursor.execute(sql)
+            self.connection.commit()
+            for key in list(debtors_to_payes.keys()):
+                tempUser1ID, tempUser2ID = key.split(",")
+                sql = f"INSERT INTO debts(tempUser1ID,tempUser2ID,debt,userID) VALUES({tempUser1ID},{tempUser2ID},{debtors_to_payes[key]},{userID})"
+                self.cursor.execute(sql)
+                self.connection.commit()
+        except Exception as err:
+            print(err)
+
+
+    def getDebtsForTableByUserID(self, userID):
+        sql = f"SELECT debts.debtID, debts.tempUser1ID, debts.tempUser2ID, debts.debt, debts.userID FROM tempusers JOIN debts ON debts.tempUser1ID=tempusers.tempUserID WHERE debts.userID={userID}"
+        try:
+            self.cursor.execute(sql)
+            datas = self.cursor.fetchall()
+            result = []
+            for data in datas:
+                data = list(data)
+                data.insert(3, self.getRelatedPersonByTempUserID(data[1], "username")[0])
+                data.insert(4, self.getRelatedPersonByTempUserID(data[2], "username")[0])
+                result.append(data)
+            return result
+        except Exception as err:
+            print(err)
